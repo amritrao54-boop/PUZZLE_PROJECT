@@ -25,28 +25,28 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/21</span>
+                <span class='fraction'>0/20</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/10</span>
+                <span class='fraction'>0/16</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/6</span>
+                <span class='fraction'>0/5</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/17</span>
+                <span class='fraction'>0/16</span>
             </div>
         
             
@@ -211,7 +211,9 @@
 <a name='L146'></a><a href='#L146'>146</a>
 <a name='L147'></a><a href='#L147'>147</a>
 <a name='L148'></a><a href='#L148'>148</a>
-<a name='L149'></a><a href='#L149'>149</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L149'></a><a href='#L149'>149</a>
+<a name='L150'></a><a href='#L150'>150</a>
+<a name='L151'></a><a href='#L151'>151</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -340,13 +342,15 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -380,7 +384,7 @@ const particles = <span class="cstat-no" title="statement not covered" >Array.fr
   color: ['#00d4ff', '#a855f7', '#22c55e', '#f97316', '#ffffff'][i % 5],
 }))
 &nbsp;
-export default function <span class="fstat-no" title="function not covered" >CompletionModal(</span>{ score, timeTaken, isOpen }) {
+export default function <span class="fstat-no" title="function not covered" >CompletionModal(</span>{ score, timeTaken, isOpen, isPractice, onClose }) {
   const navigate = <span class="cstat-no" title="statement not covered" >useNavigate()</span>
   const minutes = <span class="cstat-no" title="statement not covered" >Math.floor(timeTaken / 60)</span>
   const seconds = <span class="cstat-no" title="statement not covered" >timeTaken % 60</span>
@@ -460,7 +464,7 @@ export default function <span class="fstat-no" title="function not covered" >Com
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.5 }}
               &gt;
-                Puzzle completed!
+                {isPractice ? 'Practice attempt finished!' : 'Puzzle completed!'}
               &lt;/motion.p&gt;
 &nbsp;
               {/* Stats */}
@@ -487,17 +491,19 @@ export default function <span class="fstat-no" title="function not covered" >Com
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.7 }}
               &gt;
+                {!isPractice &amp;&amp; (
+                  &lt;button
+                    onClick={<span class="fstat-no" title="function not covered" >()</span> =&gt; <span class="cstat-no" title="statement not covered" >navigate('/profile')}</span>
+                    className="flex-1 py-3 rounded-xl bg-neon-blue/10 border border-neon-blue/30 text-neon-blue text-sm font-semibold hover:bg-neon-blue/20 transition-colors"
+                  &gt;
+                    View Heatmap
+                  &lt;/button&gt;
+                )}
                 &lt;button
-                  onClick={<span class="fstat-no" title="function not covered" >()</span> =&gt; <span class="cstat-no" title="statement not covered" >navigate('/profile')}</span>
-                  className="flex-1 py-3 rounded-xl bg-neon-blue/10 border border-neon-blue/30 text-neon-blue text-sm font-semibold hover:bg-neon-blue/20 transition-colors"
-                &gt;
-                  View Heatmap
-                &lt;/button&gt;
-                &lt;button
-                  onClick={<span class="fstat-no" title="function not covered" >()</span> =&gt; <span class="cstat-no" title="statement not covered" >navigate('/')}</span>
+                  onClick={onClose}
                   className="flex-1 py-3 rounded-xl bg-neon-purple text-white text-sm font-semibold hover:bg-neon-purple/80 transition-colors"
                 &gt;
-                  Done
+                  {isPractice ? 'Keep Playing' : 'Done'}
                 &lt;/button&gt;
               &lt;/motion.div&gt;
             &lt;/div&gt;
@@ -514,7 +520,7 @@ export default function <span class="fstat-no" title="function not covered" >Com
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-03-20T14:02:39.332Z
+                at 2026-03-24T14:55:57.273Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>

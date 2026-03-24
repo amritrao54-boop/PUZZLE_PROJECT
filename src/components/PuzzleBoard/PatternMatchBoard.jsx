@@ -6,6 +6,8 @@ const TYPE_LABELS = {
   fibonacci: 'Fibonacci Pattern',
   squares: 'Square Numbers',
   alternating: 'Alternating Pattern',
+  primes: 'Prime Sequence',
+  squaredDiff: 'Squared Difference',
 }
 
 export default function PatternMatchBoard({ puzzle, answer, onSelectAnswer, isCompleted }) {
@@ -14,54 +16,42 @@ export default function PatternMatchBoard({ puzzle, answer, onSelectAnswer, isCo
   const { sequence, options, type } = puzzle
 
   return (
-    <div className="w-full max-w-lg">
-      {/* Pattern type label */}
-      <div className="text-center mb-6">
-        <span className="text-xs uppercase tracking-widest text-neon-blue/60 font-mono">
-          {TYPE_LABELS[type] || 'Sequence Pattern'}
-        </span>
-      </div>
-
-      {/* Sequence display */}
-      <div className="flex items-center justify-center gap-3 mb-8 flex-wrap">
+    <div className="w-full max-w-lg px-4 flex flex-col items-center">
+      {/* Sequence Display */}
+      <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4 mb-12">
         {sequence.map((num, i) => (
           <motion.div
             key={i}
-            className="w-14 h-14 flex items-center justify-center bg-navy-700 border-2 border-neon-blue/30 rounded-xl text-white text-xl font-bold font-mono"
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: i * 0.1 }}
+            className="w-16 h-16 sm:w-20 sm:h-20 flex items-center justify-center glass border-white/5 rounded-3xl text-white text-2xl sm:text-3xl font-black font-mono shadow-xl relative group"
+            initial={{ opacity: 0, scale: 0.8, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            transition={{ type: "spring", delay: i * 0.1 }}
           >
+            <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity" />
             {num}
           </motion.div>
         ))}
 
-        {/* Next arrow */}
+        {/* The Missing Link */}
         <motion.div
-          className="text-neon-blue/50 text-2xl"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: sequence.length * 0.1 }}
-        >
-          →
-        </motion.div>
-
-        {/* Answer slot */}
-        <motion.div
-          className={`w-14 h-14 flex items-center justify-center rounded-xl text-xl font-bold font-mono border-2 transition-all duration-300 ${
-            answer !== null
-              ? 'bg-neon-purple/20 border-neon-purple text-white'
-              : 'bg-navy-800 border-dashed border-neon-blue/40 text-neon-blue/30'
-          }`}
-          animate={answer !== null ? { scale: [1, 1.1, 1] } : {}}
-          transition={{ duration: 0.3 }}
+          className={`w-16 h-16 sm:w-20 sm:h-20 flex items-center justify-center rounded-3xl text-2xl sm:text-3xl font-black font-mono border-2 transition-all duration-500 shadow-2xl relative
+            ${answer !== null
+              ? 'glass border-neon-purple shadow-[0_0_30px_rgba(168,85,247,0.2)] text-white'
+              : 'bg-navy-900/50 border-dashed border-white/10 text-white/10'
+            }`}
+          animate={answer !== null ? { scale: [1, 1.1, 1], rotate: [0, 5, -5, 0] } : {}}
         >
           {answer !== null ? answer : '?'}
+          {answer === null && (
+             <div className="absolute inset-0 flex items-center justify-center">
+                <div className="w-2 h-2 bg-white/20 rounded-full animate-ping" />
+             </div>
+          )}
         </motion.div>
       </div>
 
-      {/* Multiple choice options */}
-      <div className="grid grid-cols-2 gap-3">
+      {/* Multiple Choice Options */}
+      <div className="w-full grid grid-cols-2 gap-4">
         {options.map((opt, i) => {
           const isSelected = answer === opt
           const isCorrect = isCompleted && opt === puzzle.answer
@@ -71,26 +61,34 @@ export default function PatternMatchBoard({ puzzle, answer, onSelectAnswer, isCo
             <motion.button
               key={i}
               onClick={() => !isCompleted && onSelectAnswer(opt)}
-              className={`py-4 px-6 rounded-xl text-2xl font-bold font-mono border-2 transition-all duration-200
-                ${isCorrect ? 'bg-neon-green/20 border-neon-green text-neon-green' : ''}
-                ${isWrong ? 'bg-red-900/30 border-red-500 text-red-400' : ''}
-                ${isSelected && !isCompleted ? 'bg-neon-purple/20 border-neon-purple text-white' : ''}
-                ${!isSelected && !isCompleted ? 'bg-navy-700 border-navy-600 text-white hover:border-neon-blue/60 hover:bg-navy-600' : ''}
+              className={`h-20 sm:h-24 rounded-[2rem] text-3xl font-black font-mono border-2 transition-all duration-300 relative overflow-hidden group
+                ${isCorrect ? 'bg-neon-green/20 border-neon-green text-neon-green shadow-[0_0_30px_rgba(34,197,94,0.2)]' : ''}
+                ${isWrong ? 'bg-red-500/10 border-red-500 text-red-500 shadow-[0_0_30px_rgba(239,68,68,0.2)]' : ''}
+                ${isSelected && !isCompleted ? 'glass border-neon-purple text-neon-purple shadow-[0_0_40px_rgba(168,85,247,0.3)]' : ''}
+                ${!isSelected && !isCompleted ? 'glass border-white/5 text-white/40 hover:border-white/20 hover:text-white hover:shadow-2xl' : ''}
               `}
-              whileHover={!isCompleted ? { scale: 1.03 } : {}}
-              whileTap={!isCompleted ? { scale: 0.97 } : {}}
-              initial={{ opacity: 0, x: -10 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: i * 0.08 }}
+              whileHover={!isCompleted ? { y: -5, scale: 1.02 } : {}}
+              whileTap={!isCompleted ? { scale: 0.95 } : {}}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.5 + i * 0.1 }}
               disabled={isCompleted}
             >
+              <div className="absolute inset-0 bg-gradient-to-t from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
               {opt}
             </motion.button>
           )
         })}
       </div>
 
-      <p className="text-center text-xs text-gray-500 mt-6">Choose the next number in the sequence</p>
+      <motion.p 
+        className="text-center text-xs font-black uppercase tracking-[0.2em] text-gray-600 mt-12"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1.2 }}
+      >
+        Complete the sequence to solve
+      </motion.p>
     </div>
   )
 }

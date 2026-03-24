@@ -37,13 +37,10 @@ export default function GamePage() {
 
   const handleTrySubmit = async () => {
     setSubmitError(null)
-    
-    // Check if filled
     if (puzzle.type === 'number-matrix' && puzzle.answer?.some(r => r.some(v => v === 0))) {
       setSubmitError('Please fill all cells before submitting.')
       return
     }
-
     const res = await handleSubmit()
     if (!res.valid) {
       setSubmitError('Incorrect solution. Check for red conflicts!')
@@ -52,7 +49,6 @@ export default function GamePage() {
     }
   }
 
-  // Auto-save progress every 5s
   useEffect(() => {
     const interval = setInterval(() => {
       if (puzzle.status === 'playing') saveProgress()
@@ -68,7 +64,6 @@ export default function GamePage() {
     if (puzzle.type === 'number-matrix') {
       const success = handleHint()
       if (!success) return
-      // Find first empty cell and fill it with the solution value
       const currentAnswer = puzzle.answer
       const solution = puzzle.puzzle.solution
       for (let r = 0; r < 4; r++) {
@@ -85,92 +80,120 @@ export default function GamePage() {
   }
 
   return (
-    <div className="min-h-screen bg-navy-900 pt-20 pb-12 px-4">
-      {/* Background */}
-      <div className="absolute top-32 right-0 w-64 h-64 bg-neon-blue/3 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-32 left-0 w-64 h-64 bg-neon-purple/3 rounded-full blur-3xl pointer-events-none" />
+    <div className="min-h-screen bg-navy-950 text-white selection:bg-neon-blue/20 selection:text-neon-blue">
+      {/* Immersive Background */}
+      <div className="fixed inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-[-10%] right-[-10%] w-[50%] h-[50%] bg-neon-blue/5 rounded-full blur-[120px]" />
+        <div className="absolute bottom-[-10%] left-[-10%] w-[50%] h-[50%] bg-neon-purple/5 rounded-full blur-[120px]" />
+      </div>
 
-      <div className="max-w-2xl mx-auto">
-        {/* Date header */}
-        <motion.div
-          className="text-center mb-6"
-          initial={{ opacity: 0, y: -10 }}
+      {/* Top HUD (Sticky/Glassy) */}
+      <nav className="fixed top-0 left-0 right-0 z-50 glass border-b border-white/5 px-4 py-3 sm:py-4">
+        <div className="max-w-4xl mx-auto flex items-center justify-between">
+          <div className="flex items-center gap-3">
+             <motion.div 
+               className="w-10 h-10 rounded-xl bg-gradient-to-br from-neon-blue to-neon-purple flex items-center justify-center font-bold text-lg shadow-lg"
+               whileHover={{ scale: 1.1, rotate: 5 }}
+               onClick={() => window.location.href = '/'}
+               style={{ cursor: 'pointer' }}
+             >
+               ∞
+             </motion.div>
+             <div className="hidden sm:block">
+               <h2 className="text-sm font-black tracking-tighter uppercase text-white/40">Daily Challenge</h2>
+               <p className="text-xs font-mono text-neon-blue">{formatDate(today)}</p>
+             </div>
+          </div>
+
+          <div className="flex items-center gap-4 sm:gap-6">
+            <Timer />
+            <div className="h-8 w-[1px] bg-white/10" />
+            <div className="flex items-center gap-2">
+              <span className="text-gray-500 text-xs font-bold uppercase tracking-widest hidden sm:inline">Streak</span>
+              <div className="px-3 py-1 rounded-full bg-orange-500/10 border border-orange-500/30 text-orange-400 text-sm font-black">
+                🔥 7
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      <main className="pt-24 pb-32 px-4 max-w-2xl mx-auto relative z-10 flex flex-col min-h-screen">
+        {/* Puzzle Header */}
+        <motion.header 
+          className="text-center mb-10"
+          initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
         >
-          <p className="text-gray-500 text-sm font-mono">{formatDate(today)}</p>
-          <h1 className="text-white text-2xl font-bold mt-1">
-            {meta.icon} {meta.title}
-          </h1>
-          <p className="text-gray-400 text-sm mt-1">{meta.desc}</p>
-        </motion.div>
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-navy-900/50 border border-white/5 mb-4">
+            <span className="text-xl">{meta.icon}</span>
+            <span className="text-xs font-bold uppercase tracking-[0.2em] text-gray-400">{meta.title}</span>
+          </div>
+          <h1 className="text-3xl sm:text-4xl font-black mb-2 tracking-tight">Today's <span className="gradient-text">Loop</span></h1>
+          <p className="text-gray-400 text-sm max-w-sm mx-auto">{meta.desc}</p>
+        </motion.header>
 
-        {/* Loading state */}
+        {/* Loading / Status */}
         {puzzle.status === 'loading' && (
-          <div className="flex flex-col items-center justify-center py-20">
+          <div className="flex-1 flex flex-col items-center justify-center -mt-12">
             <motion.div
-              className="w-12 h-12 rounded-full border-2 border-neon-blue border-t-transparent"
-              animate={{ rotate: 360 }}
-              transition={{ repeat: Infinity, duration: 1, ease: 'linear' }}
+              className="w-16 h-16 rounded-3xl border-4 border-neon-blue/20 border-t-neon-blue shadow-[0_0_30px_rgba(0,212,255,0.2)]"
+              animate={{ rotate: 360, borderRadius: ["24px", "32px", "24px"] }}
+              transition={{ repeat: Infinity, duration: 2, ease: "linear" }}
             />
-            <p className="text-gray-400 mt-4">Loading today's puzzle…</p>
+            <p className="text-gray-400 mt-6 font-medium animate-pulse">Initializing Board...</p>
           </div>
         )}
 
-        {/* Game area */}
+        {/* Board Area */}
         {(puzzle.status === 'playing' || puzzle.status === 'completed') && (
           <motion.div
-            className="flex flex-col items-center gap-6"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
+            className="flex-1 flex flex-col items-center"
+            initial={{ opacity: 0, scale: 0.98 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.4 }}
           >
-            {/* Timer + info bar */}
-            <div className="w-full flex items-center justify-between">
-              <Timer />
-              <div className="flex items-center gap-3">
-                {/* Hints */}
-                <motion.button
-                  onClick={handleHintClick}
-                  disabled={isCompleted || puzzle.hintsRemaining === 0}
-                  className={`flex items-center gap-1.5 px-3 py-2 rounded-xl text-sm font-medium border transition-all
-                    ${puzzle.hintsRemaining > 0 && !isCompleted
-                      ? 'bg-yellow-500/10 border-yellow-500/30 text-yellow-400 hover:bg-yellow-500/20 cursor-pointer'
-                      : 'bg-navy-700/30 border-navy-600/30 text-gray-600 cursor-not-allowed'
-                    }`}
-                  whileHover={puzzle.hintsRemaining > 0 && !isCompleted ? { scale: 1.05 } : {}}
-                  whileTap={puzzle.hintsRemaining > 0 && !isCompleted ? { scale: 0.95 } : {}}
-                >
-                  <span>💡</span>
-                  <span>{puzzle.hintsRemaining}</span>
-                </motion.button>
-
-                {/* Practice Indicator */}
-                {puzzle.isPractice && (
-                  <motion.div
-                    className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-orange-500/10 border border-orange-500/30"
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: 1, scale: 1 }}
+            {/* Top Bar for Game Info */}
+            <div className="w-full flex items-center justify-between mb-8">
+              <div className="flex items-center gap-2">
+                 <button
+                    onClick={handleHintClick}
+                    disabled={isCompleted || puzzle.hintsRemaining === 0}
+                    className={`h-12 w-12 rounded-2xl flex items-center justify-center transition-all border
+                      ${puzzle.hintsRemaining > 0 && !isCompleted
+                        ? 'glass border-white/10 hover:border-yellow-500/50 text-yellow-400 shadow-xl'
+                        : 'bg-white/5 border-transparent text-gray-700 cursor-not-allowed'
+                      }`}
                   >
-                    <span className="text-orange-400 text-xs font-bold uppercase tracking-wider">Practice Mode</span>
-                  </motion.div>
-                )}
-
-                {/* Score (shown when completed) */}
-                <AnimatePresence>
-                  {isCompleted && (
-                    <motion.div
-                      className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-neon-green/10 border border-neon-green/30"
-                      initial={{ opacity: 0, scale: 0.8 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                    >
-                      <span className="text-neon-green text-sm font-bold font-mono">{puzzle.score}pts</span>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
+                    <span className="text-xl">💡</span>
+                    {puzzle.hintsRemaining > 0 && (
+                      <span className="absolute -top-1 -right-1 w-5 h-5 bg-yellow-500 text-navy-950 text-[10px] font-black rounded-full flex items-center justify-center border-2 border-navy-950">
+                        {puzzle.hintsRemaining}
+                      </span>
+                    )}
+                 </button>
+                 <span className="text-[10px] font-black uppercase tracking-widest text-gray-600 ml-1">Hint</span>
               </div>
+
+              {isCompleted && (
+                <motion.div 
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  className="px-6 py-2 rounded-2xl glass border-neon-green/30 text-neon-green font-black font-mono shadow-[0_0_20px_rgba(34,197,94,0.1)]"
+                >
+                  +{puzzle.score} XP
+                </motion.div>
+              )}
+
+              {puzzle.isPractice && !isCompleted && (
+                <div className="px-4 py-2 rounded-2xl bg-orange-500/10 border border-orange-500/20 text-orange-400 text-[10px] font-black uppercase tracking-widest">
+                  Practice Mode
+                </div>
+              )}
             </div>
 
-            {/* Puzzle board */}
-            <div className="w-full flex justify-center">
+            {/* The Actual Table */}
+            <div className="w-full h-full flex items-center justify-center py-4">
               <AnimatePresence mode="wait">
                 {puzzle.type === 'number-matrix' && (
                   <NumberMatrixBoard
@@ -191,95 +214,76 @@ export default function GamePage() {
                 )}
               </AnimatePresence>
             </div>
-
-            {/* Submit button */}
-            {!isCompleted && (
-              <div className="w-full flex flex-col gap-3 items-center">
-                <AnimatePresence>
-                  {submitError && (
-                    <motion.div
-                      className="text-red-400 text-sm font-medium mb-1"
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0 }}
-                    >
-                      ⚠️ {submitError}
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-
-                <motion.button
-                  onClick={handleTrySubmit}
-                  className="w-full max-w-xs py-4 rounded-2xl font-bold text-lg transition-all
-                    bg-gradient-to-r from-neon-blue to-neon-purple text-white
-                    hover:shadow-lg hover:shadow-neon-blue/30"
-                  whileHover={{ scale: 1.02, y: -1 }}
-                  whileTap={{ scale: 0.98 }}
-                >
-                  Submit Solution ✓
-                </motion.button>
-                
-                <div className="flex gap-4">
-                  {puzzle.type === 'number-matrix' && !isCompleted && (
-                    <button
-                      onClick={handleClearConflicts}
-                      className="text-neon-blue/60 text-xs hover:text-neon-blue transition-colors flex items-center gap-1"
-                    >
-                      <span>🧹</span> Clear Conflicts
-                    </button>
-                  )}
-                  <button
-                    onClick={async () => {
-                      if (window.confirm('This will clear today\'s board and status. Continue?')) {
-                        const { clearPuzzleProgress, deleteDailyActivity, getDailyActivity } = await import('../db/idb')
-                        const existing = await getDailyActivity(today)
-                        
-                        await clearPuzzleProgress(today)
-                        // Only delete activity if it's NOT already solved (i.e. we are not in practice mode)
-                        // If it IS solved, we want to keep that record and just refresh the board.
-                        if (!existing?.solved) {
-                          await deleteDailyActivity(today)
-                          window.location.reload()
-                        } else {
-                          // If already solved, just reset for practice
-                          handleReplay()
-                        }
-                      }
-                    }}
-                    className="text-gray-500 text-xs hover:text-gray-400 transition-colors"
-                  >
-                    Reset Board
-                  </button>
-                </div>
-              </div>
-            )}
-
-            {/* Completed state notice / Replay button */}
-            {isCompleted && (
-              <motion.div
-                className="flex flex-col items-center gap-4"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-              >
-                <div className="text-center text-neon-green font-semibold">
-                  {puzzle.isPractice 
-                    ? '✓ Practice attempt complete!' 
-                    : "✓ Today's puzzle complete! Come back tomorrow for a new one."}
-                </div>
-                
-                <motion.button
-                  onClick={handleReplay}
-                  className="px-6 py-2 rounded-xl bg-navy-700 border border-navy-600 text-gray-300 text-sm font-medium hover:bg-navy-600 transition-all"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  {puzzle.isPractice ? 'Play Again' : 'Replay (Practice)'}
-                </motion.button>
-              </motion.div>
-            )}
           </motion.div>
         )}
-      </div>
+      </main>
+
+      {/* Persistent Bottom UI */}
+      {(puzzle.status === 'playing' || puzzle.status === 'completed') && (
+        <div className="fixed bottom-0 left-0 right-0 p-4 sm:p-6 bg-gradient-to-t from-navy-950 via-navy-950/90 to-transparent z-40">
+           <div className="max-w-md mx-auto flex flex-col gap-3">
+             <AnimatePresence>
+                {submitError && (
+                  <motion.div
+                    className="glass border-red-500/50 bg-red-500/10 p-3 rounded-xl text-red-100 text-xs font-bold text-center mb-1 shadow-2xl"
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0 }}
+                  >
+                    ⚠️ {submitError}
+                  </motion.div>
+                )}
+             </AnimatePresence>
+
+             {!isCompleted ? (
+               <div className="flex gap-3">
+                 {puzzle.type === 'number-matrix' && (
+                    <motion.button
+                      onClick={handleClearConflicts}
+                      className="h-16 w-16 glass border-white/5 flex items-center justify-center rounded-2xl hover:bg-white/5 transition-all"
+                      whileTap={{ scale: 0.9 }}
+                    >
+                      <span className="text-xl">🧹</span>
+                    </motion.button>
+                 )}
+                 <motion.button
+                    onClick={handleTrySubmit}
+                    className="flex-1 h-16 bg-white text-navy-950 font-black text-xl rounded-2xl shadow-2xl"
+                    whileHover={{ scale: 1.02, y: -2 }}
+                    whileTap={{ scale: 0.98 }}
+                  >
+                    SUBMIT
+                  </motion.button>
+               </div>
+             ) : (
+               <div className="flex flex-col gap-3 items-center">
+                  <div className="text-center mb-2">
+                    <p className="text-neon-green font-black text-lg">PUZZLE SOLVED!</p>
+                    <p className="text-gray-500 text-xs mt-1">
+                      {puzzle.isPractice ? 'Practice round complete' : 'Progress saved to your streak'}
+                    </p>
+                  </div>
+                  <div className="flex gap-3 w-full">
+                    <motion.button
+                      onClick={handleReplay}
+                      className="flex-1 h-16 glass border-white/10 text-white font-black text-lg rounded-2xl"
+                      whileHover={{ scale: 1.02, y: -2 }}
+                      whileTap={{ scale: 0.98 }}
+                    >
+                      {puzzle.isPractice ? 'PLAY AGAIN' : 'PRACTICE MODE'}
+                    </motion.button>
+                    <motion.button
+                      onClick={() => window.location.href = '/'}
+                      className="h-16 w-16 glass border-white/10 flex items-center justify-center rounded-2xl"
+                    >
+                      <span>🏠</span>
+                    </motion.button>
+                  </div>
+               </div>
+             )}
+           </div>
+        </div>
+      )}
 
       {/* Completion modal */}
       <CompletionModal

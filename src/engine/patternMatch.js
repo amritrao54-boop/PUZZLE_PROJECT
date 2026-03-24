@@ -55,6 +55,28 @@ const PATTERN_TEMPLATES = [
       return { sequence: seq.slice(0, 5), answer: seq[5], full: seq }
     },
   },
+  // Prime numbers
+  {
+    type: 'primes',
+    generate: (rng) => {
+      const primes = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59]
+      const startIdx = Math.floor(rng() * (primes.length - 6))
+      const seq = primes.slice(startIdx, startIdx + 6)
+      return { sequence: seq.slice(0, 5), answer: seq[5], full: seq }
+    },
+  },
+  // Squared differences
+  {
+    type: 'squaredDiff',
+    generate: (rng) => {
+      const start = Math.floor(rng() * 10) + 1
+      const seq = [start]
+      for (let i = 1; i < 6; i++) {
+        seq.push(seq[i - 1] + i * i)
+      }
+      return { sequence: seq.slice(0, 5), answer: seq[5], full: seq }
+    },
+  },
 ]
 
 /**

@@ -157,22 +157,7 @@
 <a name='L92'></a><a href='#L92'>92</a>
 <a name='L93'></a><a href='#L93'>93</a>
 <a name='L94'></a><a href='#L94'>94</a>
-<a name='L95'></a><a href='#L95'>95</a>
-<a name='L96'></a><a href='#L96'>96</a>
-<a name='L97'></a><a href='#L97'>97</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<a name='L95'></a><a href='#L95'>95</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -185,13 +170,16 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -232,6 +220,14 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -263,6 +259,8 @@ const TYPE_LABELS = <span class="cstat-no" title="statement not covered" >{</spa
   fibonacci: 'Fibonacci Pattern',
   squares: 'Square Numbers',
   alternating: 'Alternating Pattern',
+  primes: 'Prime Sequence',
+  squaredDiff: 'Squared Difference',
 }
 &nbsp;
 export default function <span class="fstat-no" title="function not covered" >PatternMatchBoard(</span>{ puzzle, answer, onSelectAnswer, isCompleted }) {
@@ -271,54 +269,42 @@ export default function <span class="fstat-no" title="function not covered" >Pat
   const { sequence, options, type } = <span class="cstat-no" title="statement not covered" >puzzle</span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >  return (</span>
-    &lt;div className="w-full max-w-lg"&gt;
-      {/* Pattern type label */}
-      &lt;div className="text-center mb-6"&gt;
-        &lt;span className="text-xs uppercase tracking-widest text-neon-blue/60 font-mono"&gt;
-          {TYPE_LABELS[type] || 'Sequence Pattern'}
-        &lt;/span&gt;
-      &lt;/div&gt;
-&nbsp;
-      {/* Sequence display */}
-      &lt;div className="flex items-center justify-center gap-3 mb-8 flex-wrap"&gt;
+    &lt;div className="w-full max-w-lg px-4 flex flex-col items-center"&gt;
+      {/* Sequence Display */}
+      &lt;div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4 mb-12"&gt;
         {sequence.map(<span class="fstat-no" title="function not covered" >(n</span>um, i) =&gt; (
 <span class="cstat-no" title="statement not covered" >          &lt;motion.div</span>
             key={i}
-            className="w-14 h-14 flex items-center justify-center bg-navy-700 border-2 border-neon-blue/30 rounded-xl text-white text-xl font-bold font-mono"
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: i * 0.1 }}
+            className="w-16 h-16 sm:w-20 sm:h-20 flex items-center justify-center glass border-white/5 rounded-3xl text-white text-2xl sm:text-3xl font-black font-mono shadow-xl relative group"
+            initial={{ opacity: 0, scale: 0.8, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            transition={{ type: "spring", delay: i * 0.1 }}
           &gt;
+            &lt;div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity" /&gt;
             {num}
           &lt;/motion.div&gt;
         ))}
 &nbsp;
-        {/* Next arrow */}
+        {/* The Missing Link */}
         &lt;motion.div
-          className="text-neon-blue/50 text-2xl"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: sequence.length * 0.1 }}
-        &gt;
-          →
-        &lt;/motion.div&gt;
-&nbsp;
-        {/* Answer slot */}
-        &lt;motion.div
-          className={`w-14 h-14 flex items-center justify-center rounded-xl text-xl font-bold font-mono border-2 transition-all duration-300 ${
-            answer !== null
-              ? 'bg-neon-purple/20 border-neon-purple text-white'
-              : 'bg-navy-800 border-dashed border-neon-blue/40 text-neon-blue/30'
-          }`}
-          animate={answer !== null ? { scale: [1, 1.1, 1] } : {}}
-          transition={{ duration: 0.3 }}
+          className={`w-16 h-16 sm:w-20 sm:h-20 flex items-center justify-center rounded-3xl text-2xl sm:text-3xl font-black font-mono border-2 transition-all duration-500 shadow-2xl relative
+            ${answer !== null
+              ? 'glass border-neon-purple shadow-[0_0_30px_rgba(168,85,247,0.2)] text-white'
+              : 'bg-navy-900/50 border-dashed border-white/10 text-white/10'
+            }`}
+          animate={answer !== null ? { scale: [1, 1.1, 1], rotate: [0, 5, -5, 0] } : {}}
         &gt;
           {answer !== null ? answer : '?'}
+          {answer === null &amp;&amp; (
+             &lt;div className="absolute inset-0 flex items-center justify-center"&gt;
+                &lt;div className="w-2 h-2 bg-white/20 rounded-full animate-ping" /&gt;
+             &lt;/div&gt;
+          )}
         &lt;/motion.div&gt;
       &lt;/div&gt;
 &nbsp;
-      {/* Multiple choice options */}
-      &lt;div className="grid grid-cols-2 gap-3"&gt;
+      {/* Multiple Choice Options */}
+      &lt;div className="w-full grid grid-cols-2 gap-4"&gt;
         {options.map(<span class="fstat-no" title="function not covered" >(o</span>pt, i) =&gt; {
           const isSelected = <span class="cstat-no" title="statement not covered" >answer === opt</span>
           const isCorrect = <span class="cstat-no" title="statement not covered" >isCompleted &amp;&amp; opt === puzzle.answer</span>
@@ -328,26 +314,34 @@ export default function <span class="fstat-no" title="function not covered" >Pat
             &lt;motion.button
               key={i}
               onClick={<span class="fstat-no" title="function not covered" >()</span> =&gt; <span class="cstat-no" title="statement not covered" >!isCompleted &amp;&amp; onSelectAnswer(opt)}</span>
-              className={`py-4 px-6 rounded-xl text-2xl font-bold font-mono border-2 transition-all duration-200
-                ${isCorrect ? 'bg-neon-green/20 border-neon-green text-neon-green' : ''}
-                ${isWrong ? 'bg-red-900/30 border-red-500 text-red-400' : ''}
-                ${isSelected &amp;&amp; !isCompleted ? 'bg-neon-purple/20 border-neon-purple text-white' : ''}
-                ${!isSelected &amp;&amp; !isCompleted ? 'bg-navy-700 border-navy-600 text-white hover:border-neon-blue/60 hover:bg-navy-600' : ''}
+              className={`h-20 sm:h-24 rounded-[2rem] text-3xl font-black font-mono border-2 transition-all duration-300 relative overflow-hidden group
+                ${isCorrect ? 'bg-neon-green/20 border-neon-green text-neon-green shadow-[0_0_30px_rgba(34,197,94,0.2)]' : ''}
+                ${isWrong ? 'bg-red-500/10 border-red-500 text-red-500 shadow-[0_0_30px_rgba(239,68,68,0.2)]' : ''}
+                ${isSelected &amp;&amp; !isCompleted ? 'glass border-neon-purple text-neon-purple shadow-[0_0_40px_rgba(168,85,247,0.3)]' : ''}
+                ${!isSelected &amp;&amp; !isCompleted ? 'glass border-white/5 text-white/40 hover:border-white/20 hover:text-white hover:shadow-2xl' : ''}
               `}
-              whileHover={!isCompleted ? { scale: 1.03 } : {}}
-              whileTap={!isCompleted ? { scale: 0.97 } : {}}
-              initial={{ opacity: 0, x: -10 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: i * 0.08 }}
+              whileHover={!isCompleted ? { y: -5, scale: 1.02 } : {}}
+              whileTap={!isCompleted ? { scale: 0.95 } : {}}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.5 + i * 0.1 }}
               disabled={isCompleted}
             &gt;
+              &lt;div className="absolute inset-0 bg-gradient-to-t from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" /&gt;
               {opt}
             &lt;/motion.button&gt;
           )
         })}
       &lt;/div&gt;
 &nbsp;
-      &lt;p className="text-center text-xs text-gray-500 mt-6"&gt;Choose the next number in the sequence&lt;/p&gt;
+      &lt;motion.p 
+        className="text-center text-xs font-black uppercase tracking-[0.2em] text-gray-600 mt-12"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1.2 }}
+      &gt;
+        Complete the sequence to solve
+      &lt;/motion.p&gt;
     &lt;/div&gt;
   )
 }
@@ -358,7 +352,7 @@ export default function <span class="fstat-no" title="function not covered" >Pat
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-03-20T14:02:39.332Z
+                at 2026-03-24T14:55:57.273Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>

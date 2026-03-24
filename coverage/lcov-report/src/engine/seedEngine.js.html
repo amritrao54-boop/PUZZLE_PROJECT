@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/10</span>
+                <span class='fraction'>10/10</span>
             </div>
         
             
@@ -37,16 +37,16 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/4</span>
+                <span class='fraction'>4/4</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/10</span>
+                <span class='fraction'>10/10</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -104,7 +104,7 @@
 <a name='L39'></a><a href='#L39'>39</a>
 <a name='L40'></a><a href='#L40'>40</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -113,21 +113,9 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">10x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">10x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -136,14 +124,26 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">183x</span>
+<span class="cline-any cline-yes">183x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import CryptoJS from 'crypto-js'
 &nbsp;
-const SECRET_KEY = <span class="cstat-no" title="statement not covered" >'LOGIC_LOOPER_V1'</span>
+const SECRET_KEY = 'LOGIC_LOOPER_V1'
 &nbsp;
 /**
  * Generate a deterministic integer seed from a date string.
@@ -151,10 +151,10 @@ const SECRET_KEY = <span class="cstat-no" title="statement not covered" >'LOGIC_
  * @param {string} dateStr - "YYYY-MM-DD"
  * @returns {number} seed integer
  */
-export function <span class="fstat-no" title="function not covered" >generateSeed(</span>dateStr) {
-  const hash = <span class="cstat-no" title="statement not covered" >CryptoJS.SHA256(dateStr + SECRET_KEY).toString(CryptoJS.enc.Hex)</span>
+export function generateSeed(dateStr) {
+  const hash = CryptoJS.SHA256(dateStr + SECRET_KEY).toString(CryptoJS.enc.Hex)
   // Take first 8 hex chars → 32-bit integer
-<span class="cstat-no" title="statement not covered" >  return parseInt(hash.slice(0, 8), 16)</span>
+  return parseInt(hash.slice(0, 8), 16)
 }
 &nbsp;
 /**
@@ -162,11 +162,11 @@ export function <span class="fstat-no" title="function not covered" >generateSee
  * @param {number} seed
  * @returns {() =&gt; number} function returning [0, 1)
  */
-export function <span class="fstat-no" title="function not covered" >createRng(</span>seed) {
-  let s = <span class="cstat-no" title="statement not covered" >seed &gt;&gt;&gt; 0</span>
-<span class="cstat-no" title="statement not covered" >  return <span class="fstat-no" title="function not covered" >fu</span>nction () {</span>
-<span class="cstat-no" title="statement not covered" >    s = (Math.imul(1664525, s) + 1013904223) &gt;&gt;&gt; 0</span>
-<span class="cstat-no" title="statement not covered" >    return s / 0x100000000</span>
+export function createRng(seed) {
+  let s = seed &gt;&gt;&gt; 0
+  return function () {
+    s = (Math.imul(1664525, s) + 1013904223) &gt;&gt;&gt; 0
+    return s / 0x100000000
   }
 }
 &nbsp;
@@ -175,10 +175,10 @@ export function <span class="fstat-no" title="function not covered" >createRng(<
  * @param {string} dateStr
  * @returns {'number-matrix'|'pattern-match'}
  */
-export function <span class="fstat-no" title="function not covered" >getPuzzleTypeForDate(</span>dateStr) {
-  const seed = <span class="cstat-no" title="statement not covered" >generateSeed(dateStr)</span>
-  const types = <span class="cstat-no" title="statement not covered" >['number-matrix', 'pattern-match']</span>
-<span class="cstat-no" title="statement not covered" >  return types[seed % types.length]</span>
+export function getPuzzleTypeForDate(dateStr) {
+  const seed = generateSeed(dateStr)
+  const types = ['number-matrix', 'pattern-match']
+  return types[seed % types.length]
 }
 &nbsp;</pre></td></tr></table></pre>
 
@@ -187,7 +187,7 @@ export function <span class="fstat-no" title="function not covered" >getPuzzleTy
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-03-20T14:02:39.332Z
+                at 2026-03-24T14:55:57.273Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

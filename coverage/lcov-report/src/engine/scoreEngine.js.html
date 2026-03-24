@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/16</span>
+                <span class='fraction'>16/16</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">90.9% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/11</span>
+                <span class='fraction'>10/11</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/2</span>
+                <span class='fraction'>2/2</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/12</span>
+                <span class='fraction'>12/12</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -105,31 +105,31 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">8x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">8x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">8x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">8x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">/**
  * Calculate score based on base points, time taken, and hints used.
@@ -138,19 +138,19 @@
  * @param {number} difficulty - 1-5 difficulty level
  * @returns {number} integer score
  */
-export function <span class="fstat-no" title="function not covered" >calcScore(</span>timeSec, hintsUsed, difficulty = <span class="branch-0 cbranch-no" title="branch not covered" >3)</span> {
-  const BASE_SCORE = <span class="cstat-no" title="statement not covered" >1000</span>
-  const HINT_PENALTY = <span class="cstat-no" title="statement not covered" >100</span>
-  const MIN_SCORE = <span class="cstat-no" title="statement not covered" >100</span>
+export function calcScore(timeSec, hintsUsed, difficulty = <span class="branch-0 cbranch-no" title="branch not covered" >3)</span> {
+  const BASE_SCORE = 1000
+  const HINT_PENALTY = 100
+  const MIN_SCORE = 100
 &nbsp;
   // Time multiplier: full points under 60s, degrades linearly to 0.2x at 300s
-  const timeMultiplier = <span class="cstat-no" title="statement not covered" >Math.max(0.2, 1 - (timeSec - 60) / 300)</span>
+  const timeMultiplier = Math.max(0.2, 1 - (timeSec - 60) / 300)
 &nbsp;
   // Difficulty bonus: 1.0x to 2.0x
-  const difficultyBonus = <span class="cstat-no" title="statement not covered" >1 + (difficulty - 1) * 0.25</span>
+  const difficultyBonus = 1 + (difficulty - 1) * 0.25
 &nbsp;
-  const raw = <span class="cstat-no" title="statement not covered" >BASE_SCORE * timeMultiplier * difficultyBonus - hintsUsed * HINT_PENALTY</span>
-<span class="cstat-no" title="statement not covered" >  return Math.max(MIN_SCORE, Math.round(raw))</span>
+  const raw = BASE_SCORE * timeMultiplier * difficultyBonus - hintsUsed * HINT_PENALTY
+  return Math.max(MIN_SCORE, Math.round(raw))
 }
 &nbsp;
 /**
@@ -158,12 +158,12 @@ export function <span class="fstat-no" title="function not covered" >calcScore(<
  * @param {number|null} score
  * @returns {0|1|2|3|4}
  */
-export function <span class="fstat-no" title="function not covered" >scoreToIntensity(</span>score) {
-<span class="cstat-no" title="statement not covered" >  if (!score || score === 0) <span class="cstat-no" title="statement not covered" >return 0</span></span>
-<span class="cstat-no" title="statement not covered" >  if (score &lt; 300) <span class="cstat-no" title="statement not covered" >return 1</span></span>
-<span class="cstat-no" title="statement not covered" >  if (score &lt; 600) <span class="cstat-no" title="statement not covered" >return 2</span></span>
-<span class="cstat-no" title="statement not covered" >  if (score &lt; 900) <span class="cstat-no" title="statement not covered" >return 3</span></span>
-<span class="cstat-no" title="statement not covered" >  return 4</span>
+export function scoreToIntensity(score) {
+  if (!score || score === 0) return 0
+  if (score &lt; 300) return 1
+  if (score &lt; 600) return 2
+  if (score &lt; 900) return 3
+  return 4
 }
 &nbsp;</pre></td></tr></table></pre>
 
@@ -172,7 +172,7 @@ export function <span class="fstat-no" title="function not covered" >scoreToInte
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-03-20T14:02:39.332Z
+                at 2026-03-24T14:55:57.273Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

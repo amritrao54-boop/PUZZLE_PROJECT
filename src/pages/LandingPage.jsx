@@ -23,84 +23,133 @@ export default function LandingPage() {
   }
 
   return (
-    <div className="min-h-screen bg-navy-900 flex flex-col items-center justify-center px-4 relative overflow-hidden">
-      {/* Background glow orbs */}
-      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-neon-blue/5 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-neon-purple/5 rounded-full blur-3xl pointer-events-none" />
+    <div className="min-h-screen bg-navy-950 flex flex-col items-center justify-center px-4 relative overflow-hidden">
+      {/* Dynamic Background Elements */}
+      <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-neon-blue/10 rounded-full blur-[120px] animate-pulse-slow" />
+      <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-neon-purple/10 rounded-full blur-[120px] animate-pulse-slow" style={{ animationDelay: '2s' }} />
 
-      {/* Main content */}
+      {/* Main Content */}
       <motion.div
-        className="text-center max-w-2xl w-full"
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
+        className="text-center max-w-3xl w-full z-10"
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
       >
-        {/* Logo */}
+        {/* Animated Logo */}
         <motion.div
-          className="w-20 h-20 rounded-2xl bg-gradient-to-br from-neon-blue to-neon-purple mx-auto mb-6 flex items-center justify-center text-4xl font-bold text-white shadow-2xl shadow-neon-blue/30"
-          animate={{ rotate: [0, 5, 0, -5, 0] }}
-          transition={{ repeat: Infinity, duration: 6, ease: 'easeInOut' }}
+          className="w-24 h-24 rounded-[2rem] bg-gradient-to-br from-neon-blue via-neon-purple to-neon-pink mx-auto mb-8 flex items-center justify-center text-5xl font-bold text-white shadow-[0_0_50px_rgba(0,212,255,0.3)]"
+          animate={{ 
+            rotate: [0, 10, -10, 0],
+            y: [0, -10, 0]
+          }}
+          transition={{ 
+            rotate: { repeat: Infinity, duration: 8, ease: 'easeInOut' },
+            y: { repeat: Infinity, duration: 4, ease: 'easeInOut' }
+          }}
         >
           ∞
         </motion.div>
 
-        <h1 className="text-5xl sm:text-6xl font-bold text-white mb-3 leading-tight">
-          Logic<span className="text-neon-blue">Looper</span>
-        </h1>
-        <p className="text-gray-400 text-xl mb-10">
-          A new brain puzzle every day. Build your streak.
-        </p>
+        <motion.h1 
+          className="text-6xl sm:text-8xl font-black text-white mb-4 tracking-tighter"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+        >
+          Logic<span className="gradient-text">Looper</span>
+        </motion.h1>
+        
+        <motion.p 
+          className="text-gray-400 text-xl sm:text-2xl mb-12 font-medium max-w-xl mx-auto leading-relaxed"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.4 }}
+        >
+          Master your mind with unique daily challenges designed to push your cognitive limits.
+        </motion.p>
 
-        {/* CTA buttons */}
-        <div className="flex flex-col sm:flex-row gap-3 justify-center mb-16">
+        {/* CTA Section */}
+        <motion.div 
+          className="flex flex-col sm:flex-row gap-4 justify-center mb-20"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.6 }}
+        >
           {isLoggedIn || isGuest ? (
             <motion.button
               onClick={() => navigate('/game')}
-              className="px-12 py-4 bg-gradient-to-r from-neon-blue to-neon-purple text-white font-bold text-lg rounded-2xl hover:shadow-lg hover:shadow-neon-blue/30 transition-all"
-              whileHover={{ scale: 1.04, y: -2 }}
-              whileTap={{ scale: 0.97 }}
+              className="px-16 py-5 bg-gradient-to-r from-neon-blue to-neon-purple text-white font-black text-xl rounded-2xl shadow-[0_10px_40px_rgba(0,212,255,0.3)] hover:shadow-[0_15px_50px_rgba(0,212,255,0.4)] transition-all"
+              whileHover={{ scale: 1.05, y: -4 }}
+              whileTap={{ scale: 0.95 }}
             >
-              Back to Game →
+              RESUME JOURNEY →
             </motion.button>
           ) : (
             <>
               <motion.button
                 onClick={handleGuestPlay}
-                className="px-8 py-4 bg-neon-blue text-navy-900 font-bold text-lg rounded-2xl hover:bg-neon-blue/90 transition-colors shadow-lg shadow-neon-blue/30"
-                whileHover={{ scale: 1.04, y: -2 }}
-                whileTap={{ scale: 0.97 }}
+                className="px-10 py-5 bg-white text-navy-950 font-black text-xl rounded-2xl shadow-xl hover:shadow-2xl transition-all"
+                whileHover={{ scale: 1.05, y: -4 }}
+                whileTap={{ scale: 0.95 }}
               >
-                Play as Guest →
+                START PLAYING →
               </motion.button>
               <motion.button
-                className="px-8 py-4 bg-navy-700 text-white font-semibold text-lg rounded-2xl border border-navy-600 hover:border-neon-blue/40 hover:bg-navy-600 transition-all"
-                whileHover={{ scale: 1.04, y: -2 }}
-                whileTap={{ scale: 0.97 }}
+                className="px-10 py-5 glass text-white font-bold text-xl rounded-2xl hover:bg-white/10 transition-all"
+                whileHover={{ scale: 1.05, y: -4 }}
+                whileTap={{ scale: 0.95 }}
                 onClick={() => alert('Google OAuth coming soon! Play as guest for now.')}
               >
                 Sign in with Google
               </motion.button>
             </>
           )}
-        </div>
+        </motion.div>
 
-        {/* Feature grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+        {/* Feature Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 px-4 overflow-visible">
           {features.map((f, i) => (
             <motion.div
               key={i}
-              className="bg-navy-800/50 border border-navy-700/50 rounded-2xl p-4 text-left hover:border-neon-blue/20 transition-colors"
-              initial={{ opacity: 0, y: 20 }}
+              className="glass p-6 rounded-[2rem] text-left relative group overflow-hidden"
+              initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3 + i * 0.1 }}
-              whileHover={{ y: -3 }}
+              transition={{ delay: 0.8 + i * 0.1 }}
+              whileHover={{ y: -8, transition: { duration: 0.2 } }}
             >
-              <div className="text-2xl mb-2">{f.icon}</div>
-              <p className="text-white text-sm font-semibold mb-1">{f.title}</p>
-              <p className="text-gray-500 text-xs leading-snug">{f.desc}</p>
+              <div className="absolute top-0 right-0 w-24 h-24 bg-white/5 rounded-full -mr-12 -mt-12 blur-2xl group-hover:bg-neon-blue/10 transition-colors" />
+              <div className="text-4xl mb-4 bg-navy-900/50 w-14 h-14 flex items-center justify-center rounded-2xl border border-white/10 shadow-inner">{f.icon}</div>
+              <h3 className="text-white text-lg font-bold mb-2 tracking-tight">{f.title}</h3>
+              <p className="text-gray-400 text-sm leading-relaxed">{f.desc}</p>
             </motion.div>
           ))}
         </div>
+
+        {/* Footer / Info */}
+        <motion.div 
+          className="mt-20 text-gray-600 text-sm font-medium tracking-widest uppercase"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.5 }}
+        >
+          Inspired by LinkedIn Games • Optimized for Mobile
+        </motion.div>
+      </motion.div>
+
+      {/* Floating Decorative Elements */}
+      <motion.div 
+        className="absolute top-[15%] right-[15%] text-6xl opacity-10 pointer-events-none hidden lg:block"
+        animate={{ y: [0, 30, 0], rotate: [0, 15, 0] }}
+        transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut' }}
+      >
+        🧩
+      </motion.div>
+      <motion.div 
+        className="absolute bottom-[20%] left-[10%] text-6xl opacity-10 pointer-events-none hidden lg:block"
+        animate={{ y: [0, -40, 0], rotate: [0, -20, 0] }}
+        transition={{ duration: 12, repeat: Infinity, ease: 'easeInOut' }}
+      >
+        🔢
       </motion.div>
     </div>
   )

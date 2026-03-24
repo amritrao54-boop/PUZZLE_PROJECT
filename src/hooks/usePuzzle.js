@@ -25,7 +25,9 @@ export function usePuzzle() {
 
     let puzzleData
     if (type === 'number-matrix') {
-      puzzleData = generateNumberMatrix(seed)
+      // Even days = 6x6 (Hard), Odd days = 4x4 (Normal)
+      const isHard = parseInt(dateStr.slice(-1), 10) % 2 === 0
+      puzzleData = generateNumberMatrix(seed, isHard ? 6 : 4)
     } else {
       puzzleData = generatePatternMatch(seed)
     }

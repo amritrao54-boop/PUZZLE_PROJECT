@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">60% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/15</span>
+                <span class='fraction'>9/15</span>
             </div>
         
             
@@ -37,16 +37,16 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">33.33% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/9</span>
+                <span class='fraction'>3/9</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">61.53% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/13</span>
+                <span class='fraction'>8/13</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line medium'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -134,7 +134,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -157,20 +157,20 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">1095x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -198,8 +198,8 @@
 /**
  * Get today's date string "YYYY-MM-DD" in local time.
  */
-export function <span class="fstat-no" title="function not covered" >getTodayStr(</span>) {
-<span class="cstat-no" title="statement not covered" >  return dayjs().format('YYYY-MM-DD')</span>
+export function getTodayStr() {
+  return dayjs().format('YYYY-MM-DD')
 }
 &nbsp;
 /**
@@ -221,21 +221,21 @@ export function <span class="fstat-no" title="function not covered" >getLastNDat
 /**
  * Get array of 365 date strings ending today (oldest first, for heatmap).
  */
-export function <span class="fstat-no" title="function not covered" >getLast365Dates(</span>) {
-  const dates = <span class="cstat-no" title="statement not covered" >[]</span>
-<span class="cstat-no" title="statement not covered" >  for (let i = <span class="cstat-no" title="statement not covered" >364;</span> i &gt;= 0; i--) {</span>
-<span class="cstat-no" title="statement not covered" >    dates.push(dayjs().subtract(i, 'day').format('YYYY-MM-DD'))</span>
+export function getLast365Dates() {
+  const dates = []
+  for (let i = 364; i &gt;= 0; i--) {
+    dates.push(dayjs().subtract(i, 'day').format('YYYY-MM-DD'))
   }
-<span class="cstat-no" title="statement not covered" >  return dates</span>
+  return dates
 }
 &nbsp;
 /**
  * Check if two date strings are consecutive days.
  */
-export function <span class="fstat-no" title="function not covered" >areConsecutiveDays(</span>dateStr1, dateStr2) {
-  const d1 = <span class="cstat-no" title="statement not covered" >dayjs(dateStr1)</span>
-  const d2 = <span class="cstat-no" title="statement not covered" >dayjs(dateStr2)</span>
-<span class="cstat-no" title="statement not covered" >  return Math.abs(d1.diff(d2, 'day')) === 1</span>
+export function areConsecutiveDays(dateStr1, dateStr2) {
+  const d1 = dayjs(dateStr1)
+  const d2 = dayjs(dateStr2)
+  return Math.abs(d1.diff(d2, 'day')) === 1
 }
 &nbsp;
 /**
@@ -265,7 +265,7 @@ export function <span class="fstat-no" title="function not covered" >isLeapYear(
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-03-20T14:02:39.332Z
+                at 2026-03-24T14:55:57.273Z
             </div>
         <script src="../../prettify.js"></script>
         <script>
