@@ -248,7 +248,7 @@ export default function GamePage() {
                  )}
                  <motion.button
                     onClick={handleTrySubmit}
-                    className="flex-1 h-16 bg-white text-navy-950 font-black text-xl rounded-2xl shadow-2xl"
+                    className="flex-1 h-16 bg-white text-navy-900 flex items-center justify-center font-black text-xl rounded-2xl shadow-[0_0_30px_rgba(255,255,255,0.2)] hover:shadow-[0_0_40px_rgba(255,255,255,0.3)] transition-all"
                     whileHover={{ scale: 1.02, y: -2 }}
                     whileTap={{ scale: 0.98 }}
                   >
